@@ -54,3 +54,21 @@ for i, j in mix_concrete:
     print(i, '-', j)
 print()
 print('Шестое задание. Названия альбомов, в которых присутствуют исполнители более чем одного жанра:')
+name_of_more_than_one_albums = make_connect("\
+                                                SELECT DISTINCT(album_name) from genre_musician\
+                                                JOIN musician_album USING (musician_id)\
+                                                JOIN album USING (album_id)\
+                                                WHERE musician_id IN (	SELECT  musician_id from genre_musician\
+                                                                    GROUP BY musician_id\
+                                                                    HAVING COUNT(musician_id) > 1)")
+for i in name_of_more_than_one_albums:
+    print(str(i).strip('(),'))
+print()
+print('Седьмое задание. Наименования треков, которые не входят в сборники:')
+tracks_without_mix = make_connect(" SELECT track_name FROM tracks_mix\
+                                    RIGHT JOIN tracks USING (track_id)\
+                                    WHERE mix_id IS NULL")
+for i in tracks_without_mix:
+    print(str(i).strip('(),'))
+print()
+print('Восьмое задание. Исполнитель или исполнители, написавшие самый короткий по продолжительности трек:')
