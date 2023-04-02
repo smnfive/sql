@@ -72,3 +72,14 @@ for i in tracks_without_mix:
     print(str(i).strip('(),'))
 print()
 print('Восьмое задание. Исполнитель или исполнители, написавшие самый короткий по продолжительности трек:')
+musician_with_the_shortest_track = make_connect("   SELECT musician_name FROM tracks\
+                                                    JOIN musician_album USING (album_id)\
+                                                    JOIN musician USING (musician_id)\
+                                                    WHERE track_duration = (\
+                                                                            SELECT MIN(track_duration)\
+                                                                            FROM tracks)")
+for i in musician_with_the_shortest_track:
+    print(str(i).strip('(),'))
+print()
+print('Девятое задание. Названия альбомов, содержащих наименьшее количество треков:')
+albums_with_the_lowest_tracks = make_connect()
