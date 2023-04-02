@@ -82,4 +82,13 @@ for i in musician_with_the_shortest_track:
     print(str(i).strip('(),'))
 print()
 print('Девятое задание. Названия альбомов, содержащих наименьшее количество треков:')
-albums_with_the_lowest_tracks = make_connect()
+albums_with_the_lowest_tracks = make_connect("SELECT album_name FROM tracks\
+                                            JOIN album USING(album_id)\
+                                            GROUP BY album_name\
+                                            HAVING COUNT(album_name) = (\
+                                            WITH cte AS (SELECT count(track_id) FROM tracks join album using(album_id)\
+                                                         GROUP BY album_name)  SELECT MIN(count) FROM cte\
+                                            )\
+                                            ORDER BY album_name")
+for i in albums_with_the_lowest_tracks:
+    print(str(i).strip('(),'))
